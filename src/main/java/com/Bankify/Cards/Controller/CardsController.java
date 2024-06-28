@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,9 +31,12 @@ public class CardsController {
 
     private final ICardsService iCardsService;
 
+    private Environment environment;
+
     @Autowired
-    public CardsController(ICardsService iCardsService) {
+    public CardsController(ICardsService iCardsService,Environment environment) {
         this.iCardsService = iCardsService;
+        this.environment=environment;
     }
 
     @Operation(description = "These enpoint creates new card by taking mobileNumber from user")
@@ -70,8 +74,31 @@ public class CardsController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK, CardServiceConstants.UPDATE_RESPONSE_MSG));
     }
 
+    @Operation(
+            description = "fetchs the build info details "
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "HTTP STATUS SUCCESS"
+    )
     @GetMapping("/getBuildInfo")
     public ResponseEntity<ResponseDTO> getBuildInfo() {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDTO(HttpStatus.OK, "Build-Version: " + buildVersion));
     }
+
+   @Operation(
+           description = "fetchs the java version used for building the project"
+   )
+   @ApiResponse(
+           responseCode = "200",
+           description = "HTTP STATUS SUCCESS"
+   )
+    @GetMapping("/getJavaVersion")
+    public ResponseEntity<ResponseDTO> getJavaVersionInfo(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new ResponseDTO(HttpStatus.OK,environment.getProperty("NVM_HOME")));
+    }
+
+
 }
