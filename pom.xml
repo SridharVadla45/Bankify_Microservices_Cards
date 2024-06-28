@@ -11,12 +11,14 @@
     <groupId>com.Bankify</groupId>
     <artifactId>Cards</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>Cards</name>
     <description>Cards Service using MicroService Architecture .</description>
     <url/>
     <licenses>
         <license/>
     </licenses>
+
     <developers>
         <developer/>
     </developers>

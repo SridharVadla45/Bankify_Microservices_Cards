@@ -14,5 +14,9 @@ spring:
     hibernate:
       ddl-auto:none
     show-sql: true
+build:
+  version: 1.0.0
+
+
 
 
